@@ -1,0 +1,3 @@
+package com.arjunren.hospital.repository;
+import com.arjunren.hospital.entity.DoctorProfile;import jakarta.persistence.LockModeType;import java.util.Optional;import org.springframework.data.domain.*;import org.springframework.data.jpa.repository.*;import org.springframework.data.repository.query.Param;
+public interface DoctorRepository extends JpaRepository<DoctorProfile,Long>{Optional<DoctorProfile>findByUserId(Long id);boolean existsByLicenseNumberIgnoreCase(String licenseNumber);Page<DoctorProfile>findByActiveTrueAndSpecialtyContainingIgnoreCase(String specialty,Pageable p);@Lock(LockModeType.PESSIMISTIC_WRITE)@Query("select d from DoctorProfile d join fetch d.user where d.id=:id")Optional<DoctorProfile>findByIdForUpdate(@Param("id")Long id);}
